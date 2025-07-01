@@ -1,0 +1,20 @@
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        
+        s = "".join(reversed(s))
+        conversion_dict = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+
+        # idea 1: read string from right to left, check for exceptions (like if I appears afters V or X)    
+        previous_char_value = conversion_dict[s[0]]          
+        int_sum = previous_char_value
+
+        if len(s) >= 2:
+            for char in s[1:]:
+                current_char_value = conversion_dict[char]
+                int_sum += current_char_value
+                if current_char_value < previous_char_value:
+                    int_sum -= 2 * current_char_value
+
+                previous_char_value = current_char_value
+
+        return int_sum 
